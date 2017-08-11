@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wall</title>
+    <style>
+      table{
+          border: 1px solid black;
+      }
+      thead, td{
+          border: 1px solid black;
+          padding: 5px;
+          padding-left: 25px;
+          padding-right: 25px;
+      }
+      thead th{
+          padding: 10px;
+          border: 1px solid black;
+          background-color: gray;
+      }
+
+      .comments-section{
+          margin-left: 50px;
+          background-color: lightblue;
+      }
+  
+    </style>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h1>Hi welcome back {{ firname }}!!!!!</h1>
+    <h2><a href="/logoff">Log off</a></h2>
+
+    <!-- This displays all users created -->
+    <!-- <table>
+        <thead>
+            <tr>
+                <th>Email Addresses Entered:</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for email in email_list: %}
+                <tr>
+                    <td>{{ email.email }}</td>
+                    <td>{{ email['date'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>        
+    </table>  -->
+
+    <form action="/message" method="post">
+    <h2>Post a message:</h2>
+    <textarea rows="8" cols="150" name="message_content"></textarea>
+    <input type="submit" value="Post a message">
+    </form>
+
+
+    {% for messages in all_messages %}
+    <div>
+        <h4>{{ messages.fullname }} - {{ messages.date }}</h4>
+        <p>{{ messages.message }}</p>
+
+        <div class="comments-section">
+            {% for comments in all_comments %}
+            {% if comments.message_id == messages.id %}
+            <div>
+                <h4>{{ comments.fullname }} - {{ comments.date }}</h4>
+                <p>{{ comments.comment }}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+           
+            <form action="/comment" method="post">
+            <h4>Post a comment:</h4>
+            <textarea rows="4" cols="100" name="comment_content"></textarea>
+            <input type="hidden" name="messageidnumb" value="{{ messages.id }}">
+            <input type="submit" value="Post a comment">
+            </form>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login and Registration Form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .error{
+                color: red;
+                background-color: yellow;
+            }
+            .blank{
+                color: blue;
+            }
+            .password{
+                color: purple;
+            }
+            .good{
+                color: green;
+            }
+        
+        </style>
+    </head>
+    <body>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+        <form action="/login" method="post">
+            <h2>Login:</h2>
+            email: <input type="text" name="email" value="">
+            password: <input type="password" name="password" value="">
+            <input type="submit" value="Log in">
+        </form>    
+
+        <form action="/register" method="post">
+            <h2>Register Here:</h2>
+            first name: <input type="text" name="first_name" value="{{ request.form['first_name'] }}">
+            last name: <input type="text" name="last_name" value="{{ request.form['last_name'] }}">
+            email: <input type="text" name="email" value="{{ request.form['email'] }}">
+            password: <input type="password" name="password" value="{{ request.form['password'] }}">
+            confirm password: <input type="password" name="confirm_password" value="{{ request.form['confirm_password'] }}">
+            <input type="submit" value="Register">
+        </form>    
+
+
+    </body>
+</html>
